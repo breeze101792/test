@@ -1,14 +1,14 @@
 # Compiler and flags
-CXX = g++
+CXX = bear -- g++
 
 # Build type: release, debug, or test (default)
 # Usage: make BUILD=debug or just make
-BUILD ?= test
+BUILD ?= devl
 
-ifeq ($(BUILD), debug)
-    CXXFLAGS = -Wall -Wextra -g -O0 -DDEBUG
-else ifeq ($(BUILD), test)
-    CXXFLAGS = -Wall -Wextra -g -O0 -DTEST
+ifeq ($(BUILD), devl)
+    CXXFLAGS = -g -O0 -DTEST
+else ifeq ($(BUILD), debug)
+    CXXFLAGS = -Wall -Wextra -g -O0 -DDEBUG -Wno-unused-parameter -Wno-unused-variable
 else
     CXXFLAGS = -Wall -Wextra -O3
 endif
@@ -54,4 +54,15 @@ $(OBJ_DIR):
 clean:
 	rm -rf $(TARGET) $(OBJ_DIR)
 
-.PHONY: all clean
+test: main
+	@echo "================================================="
+	@./main
+	@echo "================================================="
+
+rebuild: clean main
+	echo "Rebuild"
+
+debug: main
+	gdb -q -tui ./main
+
+.PHONY: all clean test rebuild gdb
