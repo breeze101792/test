@@ -1,16 +1,16 @@
 # Compiler and flags
-CC = gcc
+CXX = g++
 
 # Build type: release, debug, or test (default)
 # Usage: make BUILD=debug or just make
 BUILD ?= test
 
 ifeq ($(BUILD), debug)
-    CFLAGS = -Wall -Wextra -g -O0 -DDEBUG
+    CXXFLAGS = -Wall -Wextra -g -O0 -DDEBUG
 else ifeq ($(BUILD), test)
-    CFLAGS = -Wall -Wextra -g -O0 -DTEST
+    CXXFLAGS = -Wall -Wextra -g -O0 -DTEST
 else
-    CFLAGS = -Wall -Wextra -O3
+    CXXFLAGS = -Wall -Wextra -O3
 endif
 
 # Directories
@@ -22,9 +22,9 @@ OBJ_DIR = obj
 TARGET = main
 
 # Source and object files
-# This will find all .c files in the src directory
-SRCS = $(wildcard $(SRC_DIR)/*.c)
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# This will find all .cpp files in the src directory
+SRCS = $(wildcard $(SRC_DIR)/*.cpp)
+OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 # Dependency files for automatic header tracking
 DEPS = $(OBJS:.o=.d)
 
@@ -36,12 +36,12 @@ all: $(TARGET)
 
 # Link object files to create the executable
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
 # Compile source files into object files
 # -MMD -MP generates dependency files (.d) to track header changes automatically
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(IFLAGS) -MMD -MP -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) $(IFLAGS) -MMD -MP -c $< -o $@
 
 # Create object directory if it doesn't exist
 $(OBJ_DIR):

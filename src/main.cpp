@@ -2,7 +2,6 @@
 
 int main(int argc, char **argv)
 {
-	printf("only for testing");
-	printf("b1");
+	printf("Testing start\n");
 	return 0;
 }
