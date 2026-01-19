@@ -9,8 +9,10 @@ ifeq ($(BUILD), devl)
     CXXFLAGS = -g -O0 -DTEST
 else ifeq ($(BUILD), debug)
     CXXFLAGS = -Wall -Wextra -g -O0 -DDEBUG -Wno-unused-parameter -Wno-unused-variable
-else
+else ifeq ($(BUILD), release)
     CXXFLAGS = -Wall -Wextra -O3
+else
+    $(error "Error build config, You must define make BUILD=(devl|debug|release) to build!")
 endif
 
 # Directories

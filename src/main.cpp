@@ -1,12 +1,9 @@
-#include <stdio.h>
 #include <stdint.h>
-
-// #include <iostream>
-// using namespace std;
+#include <stdio.h>
 
 int main(int argc, char **argv)
 {
-	printf("Testing start\n");
+    printf("Testing start\n");
 
-	return 0;
+    return 0;
 }
